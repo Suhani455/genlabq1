@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A rule-based demonstration of prompt engineering and structured JSON generation.">
+  <title>Workshop Structurer | Generative AI Practical</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="#home"><span class="brand-mark">{ }</span> Workshop Structurer</a><span class="tag">MCA · Generative AI Practical</span></header>
+  <main id="home">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">PROMPT ENGINEERING · STRUCTURED OUTPUT</p>
+        <h1>Turn workshop notes into <span>structured data.</span></h1>
+        <p class="intro">Explore how a carefully written instruction and a simple set of extraction rules can turn a paragraph into consistent, validated JSON.</p>
+        <div class="aim"><strong>Project aim</strong><p>Extract workshop details, identify missing information, and validate the result against a fixed JSON schema.</p></div>
+      </div>
+      <aside class="method-card"><span class="method-icon">✳</span><h2>How it works</h2><p>Prompt engineering means giving a system clear instructions and an expected output format. This project demonstrates that idea with transparent, rule-based text parsing.</p><div class="rule-label"><span class="dot"></span> Rule-based demo · No AI model or API</div></aside>
+    </section>
+
+    <section class="workspace" aria-label="Workshop extraction tool">
+      <div class="section-heading"><div><p class="eyebrow">01 — INPUT</p><h2>Workshop paragraph</h2></div><span class="subtle">Enter a description, then generate JSON</span></div>
+      <div class="sample-row"><span class="sample-label">Try a sample</span>
+        <button class="sample" data-sample="complete">01 <span>Complete details</span></button>
+        <button class="sample" data-sample="partial">02 <span>Date &amp; speaker missing</span></button>
+        <button class="sample" data-sample="minimal">03 <span>Title &amp; venue only</span></button>
+      </div>
+      <label class="field-label" for="paragraph">Input paragraph</label>
+      <textarea id="paragraph" placeholder="Example: The Generative AI Workshop will take place on 15 November 2026 at the Innovation Lab. Dr. Maya Rao will lead sessions on prompt design and responsible AI.&#10;&#10;Tip: Use labels like “Title:”, “Date:”, “Venue:”, “Speaker:” and “Topics:” for the clearest results."></textarea>
+      <div class="prompt-box"><div class="prompt-title"><span>↳</span> PROMPT ENGINEERING INSTRUCTION</div><p id="promptText">Extract <code>title</code>, <code>date</code>, <code>venue</code>, <code>speaker</code>, and <code>topics</code> from the paragraph. Return only valid JSON using exactly these keys. Use <code>null</code> for missing single-value fields and <code>[]</code> for missing topics. Never invent information.</p></div>
+      <div class="action-row"><button id="generate" class="primary">Generate structured JSON <span>→</span></button><button id="reset" class="quiet">Reset</button><span id="inputMessage" class="message" role="status"></span></div>
+    </section>
+
+    <section class="results" aria-label="Generated results">
+      <div class="section-heading"><div><p class="eyebrow">02 — RESULTS</p><h2>Extraction dashboard</h2></div><span id="runState" class="state idle"><i></i> Waiting for input</span></div>
+      <div class="result-grid">
+        <article class="json-card"><div class="card-head"><div><span class="eyebrow">STRUCTURED OUTPUT</span><h3>Workshop JSON</h3></div><button id="copy" class="copy" disabled>▣ <span>Copy JSON</span></button></div><pre><code id="output">{
+  "title": null,
+  "date": null,
+  "venue": null,
+  "speaker": null,
+  "topics": []
+}</code></pre><div id="copyMessage" class="copy-message" role="status"></div></article>
+        <aside class="summary-card"><div class="card-head"><div><span class="eyebrow">SCHEMA CHECK</span><h3>Validation status</h3></div></div><div id="validation" class="validation neutral"><span class="status-symbol">—</span><span>Not validated yet</span></div><div class="stat"><span>Fields extracted</span><strong id="count">0 <small>/ 5</small></strong></div><div class="missing"><h4>Missing information</h4><ul id="missingList"><li class="muted">Run extraction to check fields.</li></ul></div></aside>
+      </div>
+      <p class="footnote">Validation checks JSON syntax, the five required keys, and each field’s data type. “Extracted” counts fields with a value; topics count when at least one topic is found.</p>
+    </section>
+  </main>
+  <footer><span>Workshop Structurer</span><span>Built with HTML, CSS &amp; JavaScript · Local rule-based demonstration</span></footer>
+</body>
+</html>
